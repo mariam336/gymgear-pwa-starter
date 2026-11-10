@@ -1,0 +1,39 @@
+---
+import { pwaInfo } from 'virtual:pwa-info';
+import '../styles.css';
+
+interface Props { title: string; description?: string }
+const {title, description = 'Independent, practical gym equipment buying guides.'} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#151b1b" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <title>{title}</title>
+    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+    <script>import '../pwa';</script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="logo" href="/" aria-label="GymGear Guide home"><span class="logo-mark">G</span> GYMGEAR<span class="logo-end">.</span></a>
+        <nav aria-label="Primary navigation">
+          <a href="/#guides">Guides</a><a href="/about/">About</a><a href="/disclosure/">Disclosure</a>
+        </nav>
+      </div>
+    </header>
+    <main><slot /></main>
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div><strong>GYMGEAR.</strong><p>Research-first fitness buying guides. No invented tests or ratings.</p></div>
+        <div class="footer-links"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/disclosure/">Affiliate disclosure</a><a href="/privacy/">Privacy</a></div>
+      </div>
+      <div class="container copyright">© {new Date().getFullYear()} GymGear Guide · Starter demo — customize before publishing.</div>
+    </footer>
+  </body>
+</html>

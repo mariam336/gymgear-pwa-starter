@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { guides } from '../data/guides';
+const categories=['All categories', ...new Set(guides.map(g=>g.category))];
+---
+<BaseLayout title="GymGear Guide | Fitness gear buying guides" description="Uncomplicated buying guides for choosing home gym equipment and accessories.">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> NO HYPE. JUST SMARTER GEAR.</div>
+        <h1>Build your gym.<br /><em>Buy with confidence.</em></h1>
+        <p class="lead">Simple, practical buying guides for gear that actually fits your space, training and budget.</p>
+        <div class="hero-cta"><a class="btn btn-lime" href="#guides">Explore buying guides <span aria-hidden="true">↗</span></a><a class="text-link" href="/about/">How we research →</a></div>
+        <p class="hero-note">Independent starter content · No paid rankings</p>
+      </div>
+      <div class="hero-panel" aria-label="Featured gym equipment categories">
+        <div class="panel-top"><span>THE STARTER KIT</span><span>01 / 03</span></div>
+        <div class="equipment-icon" aria-hidden="true">✦</div>
+        <div class="panel-highlight">LESS SPACE.<br /><span>MORE STRENGTH.</span></div>
+        <div class="panel-bottom"><div><small>HOME GYM</small><strong>Find your fit</strong></div><div class="panel-arrow">↗</div></div>
+      </div>
+    </div>
+  </section>
+  <section class="benefits"><div class="container benefits-grid"><div><span>01</span><strong>Practical criteria</strong><small>Understand specs that matter.</small></div><div><span>02</span><strong>No fake reviews</strong><small>Research-based, clearly labeled.</small></div><div><span>03</span><strong>Built for real life</strong><small>Space, goals and budget first.</small></div></div></section>
+  <section id="guides" class="section container">
+    <div class="section-heading"><div><p class="kicker">EXPLORE THE ESSENTIALS</p><h2>Buying guides, <i>made simple.</i></h2><p>Filter the sample guides below to find a product category.</p></div><span class="count">{guides.length} SAMPLE GUIDES</span></div>
+    <div class="filters"><label class="sr-only" for="guide-search">Search guides</label><input id="guide-search" type="search" placeholder="Search guides, equipment or training goals..." /><label class="sr-only" for="category">Category</label><select id="category" aria-label="Filter by category">{categories.map(c=><option value={c}>{c}</option>)}</select></div>
+    <div id="guide-cards" class="cards">
+      {guides.map((guide,i)=> <article class="guide-card" data-search={`${guide.title} ${guide.category} ${guide.intro}`.toLowerCase()} data-category={guide.category}>
+        <div class={`card-visual color-${i%3}`}><span class="card-index">{String(i+1).padStart(2,'0')}</span><span class="abstract-gear" aria-hidden="true">{['◉','⌁','▱','◈','✳','▰'][i]}</span><span class="visual-label">{guide.badge}</span></div>
+        <div class="card-body"><p class="card-category">{guide.category.toUpperCase()}</p><h3><a href={`/guides/${guide.slug}/`}>{guide.title}</a></h3><p>{guide.subtitle}</p><a href={`/guides/${guide.slug}/`} class="card-link">Read buying guide <span aria-hidden="true">↗</span></a></div>
+      </article>)}
+    </div>
+    <p id="no-results" class="no-results" hidden>No matching guides. Try another search or category.</p>
+  </section>
+  <section class="callout"><div class="container callout-grid"><div><p class="kicker">START WITH WHAT MATTERS</p><h2>The right equipment is the equipment you'll use.</h2><p>We focus on fit, function and practical buying criteria—not made-up scores.</p></div><a href="/about/" class="btn btn-dark">Our review approach ↗</a></div></section>
+  <script>
+    const search = document.querySelector<HTMLInputElement>('#guide-search');
+    const category = document.querySelector<HTMLSelectElement>('#category');
+    const cards = [...document.querySelectorAll<HTMLElement>('.guide-card')];
+    const none = document.querySelector<HTMLElement>('#no-results');
+    function filterGuides() {
+      const q=(search?.value||'').trim().toLowerCase();
+      const c=category?.value||'All categories';
+      let count=0;
+      for(const card of cards){const show=(c==='All categories'||card.dataset.category===c)&&(!q||(card.dataset.search||'').includes(q));card.hidden=!show;if(show)count++;}
+      if(none)none.hidden=count>0;
+    }
+    search?.addEventListener('input',filterGuides);category?.addEventListener('change',filterGuides);
+  </script>
+</BaseLayout>
