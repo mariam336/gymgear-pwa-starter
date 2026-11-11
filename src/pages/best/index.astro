@@ -1,0 +1,7 @@
+---
+import { getCollection } from 'astro:content';
+import ArchivePage from '../../components/ArchivePage.astro';
+import {href} from '../../lib/content';
+const items=(await getCollection('best',({data})=>data.status!=='draft')).map(entry=>({kind:'best',entry,href:href('best',entry.id)})).sort((a,b)=>+b.entry.data.date - +a.entry.data.date);
+---
+<ArchivePage title="Best Fitness Gear" description="Browse best-product guide templates organized around real training needs and budgets." eyebrow="OUR BEST-OF GUIDES" items={items} />

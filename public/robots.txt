@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /search/
+Sitemap: https://gymgear-pwa-starter.pages.dev/sitemap-index.xml

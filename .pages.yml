@@ -1,0 +1,421 @@
+media:
+  input: public/uploads
+  output: /uploads
+  rename: safe
+content:
+  - name: reviews
+    label: Individual reviews
+    type: collection
+    path: src/content/reviews
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: title
+      sort: date
+      order: desc
+    fields:
+
+      - name: title
+        label: Article title
+        type: string
+        required: true
+      - name: description
+        label: Article summary
+        type: text
+        required: true
+      - name: category
+        type: select
+        required: true
+        options:
+          values: [home-gym-equipment, strength-training, cardio-equipment, running-shoes, yoga-mobility, fitness-wearables, recovery-tools, workout-accessories]
+      - name: date
+        label: Publication date
+        type: date
+        required: true
+      - name: updated
+        label: Actual updated date (optional)
+        type: date
+      - name: status
+        type: select
+        options:
+          values: [draft, demo, published]
+      - name: author
+        type: string
+      - name: image
+        label: Article illustration or licensed image
+        type: image
+      - name: featured
+        type: boolean
+      - name: verdict
+        type: text
+      - name: bestFor
+        type: text
+      - name: notFor
+        type: text
+      - name: productIds
+        label: Matching product IDs
+        type: string
+        list: true
+      - name: pros
+        type: string
+        list: true
+      - name: cons
+        type: string
+        list: true
+      - name: seoTitle
+        type: string
+      - name: seoDescription
+        type: text
+      - name: body
+        type: rich-text
+  - name: best
+    label: Best-product roundups
+    type: collection
+    path: src/content/best
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: title
+      sort: date
+      order: desc
+    fields:
+
+      - name: title
+        label: Article title
+        type: string
+        required: true
+      - name: description
+        label: Article summary
+        type: text
+        required: true
+      - name: category
+        type: select
+        required: true
+        options:
+          values: [home-gym-equipment, strength-training, cardio-equipment, running-shoes, yoga-mobility, fitness-wearables, recovery-tools, workout-accessories]
+      - name: date
+        label: Publication date
+        type: date
+        required: true
+      - name: updated
+        label: Actual updated date (optional)
+        type: date
+      - name: status
+        type: select
+        options:
+          values: [draft, demo, published]
+      - name: author
+        type: string
+      - name: image
+        label: Article illustration or licensed image
+        type: image
+      - name: featured
+        type: boolean
+      - name: verdict
+        type: text
+      - name: bestFor
+        type: text
+      - name: notFor
+        type: text
+      - name: productIds
+        label: Matching product IDs
+        type: string
+        list: true
+      - name: pros
+        type: string
+        list: true
+      - name: cons
+        type: string
+        list: true
+      - name: seoTitle
+        type: string
+      - name: seoDescription
+        type: text
+      - name: body
+        type: rich-text
+  - name: comparisons
+    label: Head-to-head comparisons
+    type: collection
+    path: src/content/comparisons
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: title
+      sort: date
+      order: desc
+    fields:
+
+      - name: title
+        label: Article title
+        type: string
+        required: true
+      - name: description
+        label: Article summary
+        type: text
+        required: true
+      - name: category
+        type: select
+        required: true
+        options:
+          values: [home-gym-equipment, strength-training, cardio-equipment, running-shoes, yoga-mobility, fitness-wearables, recovery-tools, workout-accessories]
+      - name: date
+        label: Publication date
+        type: date
+        required: true
+      - name: updated
+        label: Actual updated date (optional)
+        type: date
+      - name: status
+        type: select
+        options:
+          values: [draft, demo, published]
+      - name: author
+        type: string
+      - name: image
+        label: Article illustration or licensed image
+        type: image
+      - name: featured
+        type: boolean
+      - name: verdict
+        type: text
+      - name: bestFor
+        type: text
+      - name: notFor
+        type: text
+      - name: productIds
+        label: Matching product IDs
+        type: string
+        list: true
+      - name: pros
+        type: string
+        list: true
+      - name: cons
+        type: string
+        list: true
+      - name: seoTitle
+        type: string
+      - name: seoDescription
+        type: text
+      - name: body
+        type: rich-text
+  - name: buyingGuides
+    label: Buying guides
+    type: collection
+    path: src/content/buyingGuides
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: title
+      sort: date
+      order: desc
+    fields:
+
+      - name: title
+        label: Article title
+        type: string
+        required: true
+      - name: description
+        label: Article summary
+        type: text
+        required: true
+      - name: category
+        type: select
+        required: true
+        options:
+          values: [home-gym-equipment, strength-training, cardio-equipment, running-shoes, yoga-mobility, fitness-wearables, recovery-tools, workout-accessories]
+      - name: date
+        label: Publication date
+        type: date
+        required: true
+      - name: updated
+        label: Actual updated date (optional)
+        type: date
+      - name: status
+        type: select
+        options:
+          values: [draft, demo, published]
+      - name: author
+        type: string
+      - name: image
+        label: Article illustration or licensed image
+        type: image
+      - name: featured
+        type: boolean
+      - name: verdict
+        type: text
+      - name: bestFor
+        type: text
+      - name: notFor
+        type: text
+      - name: productIds
+        label: Matching product IDs
+        type: string
+        list: true
+      - name: pros
+        type: string
+        list: true
+      - name: cons
+        type: string
+        list: true
+      - name: seoTitle
+        type: string
+      - name: seoDescription
+        type: text
+      - name: body
+        type: rich-text
+  - name: fitnessAdvice
+    label: Fitness advice
+    type: collection
+    path: src/content/fitnessAdvice
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: title
+      sort: date
+      order: desc
+    fields:
+
+      - name: title
+        label: Article title
+        type: string
+        required: true
+      - name: description
+        label: Article summary
+        type: text
+        required: true
+      - name: category
+        type: select
+        required: true
+        options:
+          values: [home-gym-equipment, strength-training, cardio-equipment, running-shoes, yoga-mobility, fitness-wearables, recovery-tools, workout-accessories]
+      - name: date
+        label: Publication date
+        type: date
+        required: true
+      - name: updated
+        label: Actual updated date (optional)
+        type: date
+      - name: status
+        type: select
+        options:
+          values: [draft, demo, published]
+      - name: author
+        type: string
+      - name: image
+        label: Article illustration or licensed image
+        type: image
+      - name: featured
+        type: boolean
+      - name: verdict
+        type: text
+      - name: bestFor
+        type: text
+      - name: notFor
+        type: text
+      - name: productIds
+        label: Matching product IDs
+        type: string
+        list: true
+      - name: pros
+        type: string
+        list: true
+      - name: cons
+        type: string
+        list: true
+      - name: seoTitle
+        type: string
+      - name: seoDescription
+        type: text
+      - name: body
+        type: rich-text
+  - name: products
+    label: Product example records
+    type: file
+    path: src/data/products.json
+    format: json
+    list: true
+    fields:
+      - name: id
+        type: string
+        required: true
+      - name: name
+        type: string
+        required: true
+      - name: brand
+        type: string
+      - name: category
+        type: select
+        options:
+          values: [home-gym-equipment, strength-training, cardio-equipment, running-shoes, yoga-mobility, fitness-wearables, recovery-tools, workout-accessories]
+      - name: productType
+        type: string
+      - name: bestFor
+        type: text
+      - name: keyConsideration
+        type: text
+      - name: storage
+        type: text
+      - name: image
+        type: image
+      - name: specifications
+        type: object
+        list: true
+        fields:
+          - name: name
+            type: string
+          - name: value
+            type: string
+      - name: pros
+        type: string
+        list: true
+      - name: cons
+        type: string
+        list: true
+      - name: retailers
+        type: object
+        list: true
+        fields:
+          - name: name
+            type: string
+          - name: url
+            type: string
+      - name: reviewUrl
+        type: string
+      - name: published
+        type: boolean
+  - name: siteSettings
+    label: Site settings
+    type: file
+    path: src/data/settings.json
+    format: json
+    fields:
+      - name: siteName
+        type: string
+      - name: tagline
+        type: text
+      - name: description
+        type: text
+      - name: authorName
+        type: string
+      - name: contactEmail
+        type: string
+      - name: siteUrl
+        type: string
+      - name: instagram
+        type: string
+      - name: pinterest
+        type: string
+      - name: youtube
+        type: string
+      - name: market
+        type: string
+      - name: currency
+        type: string
+      - name: newsletterProvider
+        type: string
+      - name: newsletterFormAction
+        type: string
+      - name: searchConsoleVerification
+        type: string
+      - name: analyticsId
+        type: string

@@ -1,4 +1,4 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="Page not found | GymGear Guide"><section class="simple-page container"><p class="kicker">404</p><h1>That page isn't here.</h1><p>Head back to the buying guides and keep exploring.</p><a class="btn btn-dark" href="/">Back to homepage →</a></section></BaseLayout>
+<BaseLayout title="Page not found | FitGear Review Hub" noindex={true}><section class="notfound shell"><span>404</span><h1>This link missed the mark.</h1><p>We couldn't find that page. Try a different equipment guide or search the site.</p><form action="/search/" method="get"><label class="sr-only" for="q404">Search guides</label><input id="q404" name="q" type="search" placeholder="Search fitness guides..."/><button class="btn btn-dark" type="submit">Search ↗</button></form><a href="/" class="underlined-link">Return home →</a></section></BaseLayout>

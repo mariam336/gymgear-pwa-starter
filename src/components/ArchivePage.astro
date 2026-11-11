@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from './ArticleCard.astro';
+import PageHero from './PageHero.astro';
+import categories from '../data/categories.json';
+interface Props{ title:string; description:string; eyebrow:string; items:any[]; noindex?:boolean }
+const {title,description,eyebrow,items,noindex=false}=Astro.props;
+---
+<BaseLayout title={`${title} | FitGear Review Hub`} description={description} noindex={noindex}>
+  <PageHero title={title} intro={description} eyebrow={eyebrow} count={`${items.length} ARTICLES`} />
+  <section class="shell archive-wrap"><div class="archive-controls"><div class="input-shell"><span aria-hidden="true">⌕</span><label class="sr-only" for="archive-search">Search articles</label><input type="search" id="archive-search" placeholder="Search titles and topics..."/></div><label class="sr-only" for="archive-category">Category</label><select id="archive-category"><option value="">All categories</option>{categories.map(c=><option value={c.slug}>{c.name}</option>)}</select><label class="sr-only" for="archive-sort">Sort by</label><select id="archive-sort"><option value="latest">Latest first</option><option value="az">A–Z</option></select></div>
+    <div id="archive-results" class="article-grid-cards">{items.map(item=><ArticleCard item={item}/>)}</div><p class="empty-state" id="archive-empty" hidden>No matching guides found. Try another term or category.</p><div class="pagination-controls"><button type="button" class="btn btn-outline" id="archive-more" hidden>Load more articles ↓</button></div>
+  </section>
+<script>
+ const input=document.querySelector<HTMLInputElement>('#archive-search');const select=document.querySelector<HTMLSelectElement>('#archive-category');const sort=document.querySelector<HTMLSelectElement>('#archive-sort');const cards=[...document.querySelectorAll<HTMLElement>('#archive-results .article-card')];const grid=document.getElementById('archive-results');const empty=document.getElementById('archive-empty');const more=document.querySelector<HTMLButtonElement>('#archive-more');let limit=9;
+ function apply(){const q=(input?.value||'').trim().toLowerCase();const c=select?.value||'';const matching=cards.filter(x=>(!q||(x.dataset.search||'').includes(q))&&(!c||x.dataset.category===c));matching.sort((a,b)=>sort?.value==='az'?(a.dataset.title||'').localeCompare(b.dataset.title||''):(b.dataset.date||'').localeCompare(a.dataset.date||''));matching.forEach(x=>grid?.append(x));cards.forEach(x=>x.hidden=!matching.slice(0,limit).includes(x));if(empty)empty.hidden=matching.length>0;if(more)more.hidden=matching.length<=limit;}
+ for(const ctl of [input,select,sort]) ctl?.addEventListener(ctl===input?'input':'change',()=>{limit=9;apply();});more?.addEventListener('click',()=>{limit+=9;apply();});apply();
+</script>
+</BaseLayout>

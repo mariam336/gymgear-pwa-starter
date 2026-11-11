@@ -1,0 +1,11 @@
+---
+import { dateText, labels } from '../lib/content';
+interface Props { item:any; variant?:'standard'|'wide'; }
+const {item,variant='standard'}=Astro.props;
+const {entry,kind,href}=item;
+const img=entry.data.image||'/images/gear-home.svg';
+---
+<article class={`article-card ${variant==='wide'?'wide-card':''}`} data-search={`${entry.data.title} ${entry.data.description} ${entry.data.category} ${kind}`.toLowerCase()} data-category={entry.data.category} data-title={entry.data.title.toLowerCase()} data-date={entry.data.date.toISOString()}>
+  <a class="article-card-image" href={href} aria-label={`Read ${entry.data.title}`}><img src={img} alt={`Editorial illustration for ${entry.data.title}`} loading="lazy" width="640" height="440"/><span class="image-corner"><span>↗</span></span></a>
+  <div class="article-card-text"><div class="meta-row"><span class="mini-category">{labels[kind]}</span><span>{dateText(entry.data.date)}</span></div><h3><a href={href}>{entry.data.title}</a></h3><p>{entry.data.description}</p><div class="card-bottom"><span>{entry.data.status==='demo'?'Sample guide · verify before publishing':'Read article'}</span><a href={href} class="arrow-link" aria-label={`Open ${entry.data.title}`}>↗</a></div></div>
+</article>

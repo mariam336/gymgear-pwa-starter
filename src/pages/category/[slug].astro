@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import CategoryTile from '../../components/CategoryTile.astro';
+import {allArticles} from '../../lib/content';
+import categories from '../../data/categories.json';
+export async function getStaticPaths(){return categories.map(category=>({params:{slug:category.slug},props:{category}}));}
+const {category}=Astro.props;
+const all=await allArticles();const items=all.filter(x=>x.entry.data.category===category.slug);
+---
+<BaseLayout title={`${category.name} Guides | FitGear Review Hub`} description={`Practical comparisons, reviews and buyer guidance for ${category.name.toLowerCase()}.`}>
+<PageHero eyebrow="EXPLORE YOUR CATEGORY" title={category.name} intro={category.short+' Browse buying guides, product research, and comparisons tailored to this equipment category.'} count={`${items.length} ARTICLES`} />
+<section class="section-block shell"><div class="section-head"><div><span class="eyebrow eyebrow-dark"><span class="eyebrow-line"></span>RELEVANT BUYING ADVICE</span><h2>Guides for {category.name.toLowerCase()}.</h2></div></div>{items.length?<div class="article-grid-cards">{items.map(item=><ArticleCard item={item}/>)}</div>:<div class="empty-category"><h3>More coverage is on the way.</h3><p>This category is ready, but verified product reviews have not been published yet. Start with our practical buying guides.</p><a class="btn btn-dark" href="/buying-guides/">Browse buying guides →</a></div>}</section>
+<section class="section-soft section-block"><div class="shell"><div class="section-head"><div><span class="eyebrow eyebrow-dark"><span class="eyebrow-line"></span>OTHER CATEGORIES</span><h2>Explore more equipment.</h2></div></div><div class="category-grid compact-grid">{categories.filter(x=>x.slug!==category.slug).slice(0,4).map((c,i)=><CategoryTile category={c} index={i}/>)}</div></div></section>
+</BaseLayout>

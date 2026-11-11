@@ -1,39 +1,54 @@
 ---
 import { pwaInfo } from 'virtual:pwa-info';
+import Icon from '../components/Icon.astro';
+import settings from '../data/settings.json';
 import '../styles.css';
-
-interface Props { title: string; description?: string }
-const {title, description = 'Independent, practical gym equipment buying guides.'} = Astro.props;
+interface Props { title: string; description?: string; noindex?:boolean; image?:string; article?:boolean; schema?:object }
+const { title, description=settings.description, noindex=false, image='/images/hero-fitness.svg', article=false, schema } = Astro.props;
+const url = new URL(Astro.url.pathname, Astro.site || Astro.url);
+const ogImage = new URL(image, Astro.site || Astro.url);
+const topLinks=[['Reviews','/reviews/'],['Best Fitness Gear','/best/'],['Comparisons','/compare/'],['Buying Guides','/buying-guides/']];
 ---
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#151b1b" />
-    <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <title>{title}</title>
-    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
-    <script>import '../pwa';</script>
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="container nav-wrap">
-        <a class="logo" href="/" aria-label="GymGear Guide home"><span class="logo-mark">G</span> GYMGEAR<span class="logo-end">.</span></a>
-        <nav aria-label="Primary navigation">
-          <a href="/#guides">Guides</a><a href="/about/">About</a><a href="/disclosure/">Disclosure</a>
-        </nav>
-      </div>
-    </header>
-    <main><slot /></main>
-    <footer class="footer">
-      <div class="container footer-grid">
-        <div><strong>GYMGEAR.</strong><p>Research-first fitness buying guides. No invented tests or ratings.</p></div>
-        <div class="footer-links"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/disclosure/">Affiliate disclosure</a><a href="/privacy/">Privacy</a></div>
-      </div>
-      <div class="container copyright">© {new Date().getFullYear()} GymGear Guide · Starter demo — customize before publishing.</div>
-    </footer>
-  </body>
-</html>
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#171C20" /><meta name="description" content={description}/>
+  <meta name="color-scheme" content="light" />
+  <link rel="canonical" href={url.toString()} />
+  {noindex && <meta name="robots" content="noindex,follow"/>}
+  <meta property="og:type" content={article?'article':'website'}/>
+  <meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={url.toString()}/><meta property="og:image" content={ogImage.toString()}/>
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+  <title>{title}</title>
+  {schema && <script type="application/ld+json" set:html={JSON.stringify(schema).replaceAll('<','\u003c')}/>}
+  <script>import '../pwa';</script>
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+<div class="announcement"><div class="shell announcement-inner"><span class="announce-dot"></span> INDEPENDENT FITNESS GEAR GUIDES <span class="announcement-right">REAL CRITERIA. NO HYPE. <Icon name="arrowUp" size={13}/></span></div></div>
+<header class="site-header" id="header"><div class="shell navigation">
+<a href="/" class="brand" aria-label="FitGear Review Hub homepage"><span class="brand-symbol"><Icon name="dumbbell" size={21} stroke={2.4}/></span><span>FITGEAR<span class="brand-highlight">.</span><small>REVIEW HUB</small></span></a>
+<nav id="primary-nav" class="nav-links" aria-label="Primary navigation">
+<a href="/">Home</a>{topLinks.map(([label,href])=><a href={href}>{label}</a>)}
+<div class="nav-dropdown"><button class="nav-categories" id="category-toggle" aria-expanded="false" aria-controls="category-menu" type="button">Categories <span class="chevron">⌄</span></button><div id="category-menu" class="dropdown-menu" hidden><a href="/category/home-gym-equipment/">Home Gym Equipment</a><a href="/category/strength-training/">Strength Training Gear</a><a href="/category/cardio-equipment/">Cardio Equipment</a><a href="/category/running-shoes/">Running & Training Shoes</a><a href="/category/yoga-mobility/">Yoga & Mobility</a><a href="/category/fitness-wearables/">Fitness Wearables</a><a href="/category/recovery-tools/">Recovery & Massage</a><a href="/category/workout-accessories/">Workout Accessories</a></div></div>
+<a href="/about/">About</a></nav>
+<div class="nav-actions"><a class="search-trigger" href="/search/" aria-label="Search site"><Icon name="search" size={21}/></a><a class="nav-cta" href="/best/">Find your gear <Icon name="arrowUp" size={16}/></a><button id="mobile-menu" class="mobile-menu" aria-controls="primary-nav" aria-expanded="false" aria-label="Open navigation" type="button"><Icon name="menu" size={24}/></button></div>
+</div></header>
+<main id="content"><slot /></main>
+<footer class="site-footer"><div class="shell footer-top"><div class="footer-intro"><a href="/" class="brand brand-light"><span class="brand-symbol"><Icon name="dumbbell" size={21}/></span><span>FITGEAR<span class="brand-highlight">.</span><small>REVIEW HUB</small></span></a><p>{settings.tagline}</p><p class="footer-honesty">Independent editorial templates. Demo content is clearly identified; no invented product tests or ratings.</p></div>
+<div class="footer-column"><h3>Explore</h3><a href="/reviews/">Product Reviews</a><a href="/best/">Best Fitness Gear</a><a href="/compare/">Compare Equipment</a><a href="/buying-guides/">Buying Guides</a><a href="/fitness-advice/">Fitness Advice</a></div>
+<div class="footer-column"><h3>About</h3><a href="/about/">Our Story</a><a href="/how-we-test/">How We Review</a><a href="/editorial-policy/">Editorial Policy</a><a href="/authors/">Our Authors</a><a href="/contact/">Contact</a></div>
+<div class="footer-column"><h3>Policies</h3><a href="/affiliate-disclosure/">Affiliate Disclosure</a><a href="/privacy-policy/">Privacy Policy</a><a href="/cookie-policy/">Cookie Policy</a><a href="/terms/">Terms of Use</a><a href="/accessibility/">Accessibility</a></div>
+</div><div class="shell footer-bottom"><span>© {new Date().getFullYear()} {settings.siteName}. All rights reserved.</span><span>Built for thoughtful fitness decisions. <span class="tiny-lime">●</span></span></div></footer>
+<script>
+ const menu=document.getElementById('mobile-menu');const nav=document.getElementById('primary-nav');
+ menu?.addEventListener('click',()=>{let open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));nav?.classList.toggle('is-open',open);});
+ const cat=document.getElementById('category-toggle');const drop=document.getElementById('category-menu');
+ cat?.addEventListener('click',()=>{let open=cat.getAttribute('aria-expanded')!=='true';cat.setAttribute('aria-expanded',String(open));if(drop)drop.hidden=!open;});
+ document.addEventListener('click',(ev)=>{if(!cat?.parentElement?.contains(ev.target as Node)){cat?.setAttribute('aria-expanded','false');if(drop)drop.hidden=true;}});
+</script>
+</body></html>

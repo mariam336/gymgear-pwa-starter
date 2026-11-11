@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from './PageHero.astro';
+interface Props{title:string;eyebrow:string;intro:string;}
+const {title,eyebrow,intro}=Astro.props;
+---
+<BaseLayout title={`${title} | FitGear Review Hub`} description={intro}>
+<PageHero title={title} eyebrow={eyebrow} intro={intro}/>
+<div class="shell info-wrapper"><article class="rich-text info-prose"><slot /></article></div>
+</BaseLayout>

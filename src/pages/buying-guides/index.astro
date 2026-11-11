@@ -1,0 +1,7 @@
+---
+import { getCollection } from 'astro:content';
+import ArchivePage from '../../components/ArchivePage.astro';
+import {href} from '../../lib/content';
+const items=(await getCollection('buyingGuides',({data})=>data.status!=='draft')).map(entry=>({kind:'buyingGuides',entry,href:href('buyingGuides',entry.id)})).sort((a,b)=>+b.entry.data.date - +a.entry.data.date);
+---
+<ArchivePage title="Buying Guides" description="Learn how to evaluate the features, specifications and trade-offs that matter most." eyebrow="SMARTER EQUIPMENT SHOPPING" items={items} />

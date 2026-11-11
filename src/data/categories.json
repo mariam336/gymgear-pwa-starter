@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "home-gym-equipment",
+    "name": "Home Gym Equipment",
+    "short": "Smarter setups, smaller spaces.",
+    "icon": "dumbbell",
+    "tone": "mint"
+  },
+  {
+    "slug": "strength-training",
+    "name": "Strength Training Gear",
+    "short": "Racks, benches, bars and more.",
+    "icon": "strength",
+    "tone": "lime"
+  },
+  {
+    "slug": "cardio-equipment",
+    "name": "Cardio Equipment",
+    "short": "Move more, wherever you train.",
+    "icon": "cardio",
+    "tone": "blue"
+  },
+  {
+    "slug": "running-shoes",
+    "name": "Running & Training Shoes",
+    "short": "Support and fit for your routine.",
+    "icon": "shoe",
+    "tone": "peach"
+  },
+  {
+    "slug": "yoga-mobility",
+    "name": "Yoga & Mobility Equipment",
+    "short": "Stretch, balance and restore.",
+    "icon": "yoga",
+    "tone": "lavender"
+  },
+  {
+    "slug": "fitness-wearables",
+    "name": "Fitness Trackers & Wearables",
+    "short": "Useful tech, clear comparisons.",
+    "icon": "watch",
+    "tone": "sand"
+  },
+  {
+    "slug": "recovery-tools",
+    "name": "Recovery & Massage Tools",
+    "short": "Practical tools after training.",
+    "icon": "recovery",
+    "tone": "pink"
+  },
+  {
+    "slug": "workout-accessories",
+    "name": "Workout Accessories",
+    "short": "Small essentials that matter.",
+    "icon": "bag",
+    "tone": "sky"
+  }
+]

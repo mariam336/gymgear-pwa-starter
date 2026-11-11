@@ -1,4 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import settings from '../data/settings.json';
+const ready=Boolean(settings.contactEmail);
 ---
-<BaseLayout title="Contact | GymGear Guide"><section class="simple-page container"><p class="kicker">CONTACT</p><h1>Get in touch.</h1><p>Before launch, replace the placeholder below with your dedicated business email.</p><p><a class="btn btn-dark" href="mailto:hello@example.com">Email us →</a></p></section></BaseLayout>
+<BaseLayout title="Contact | FitGear Review Hub" description="Send feedback, corrections or questions about fitness gear articles."><PageHero title="Let's talk gear." eyebrow="GET IN TOUCH" intro="Have a question, correction, or product suggestion? Reach out to the editorial team."/>
+<section class="shell contact-layout"><div><h2>We'd love to hear from you.</h2><p>Use this form to prepare an email in your mail application. This static website does not send or store contact form submissions.</p><div class="notice-soft">{ready?<p>Messages open in your email app and are sent only after you confirm there.</p>:<p><strong>Contact not configured yet.</strong> Add a real address in <code>src/data/settings.json</code> before enabling messages. The form is disabled until then.</p>}</div></div><form id="contact-form" class="contact-form" data-recipient={settings.contactEmail} novalidate><label>Your name<input name="name" type="text" maxlength="80" required autocomplete="name" placeholder="Full name" disabled={!ready}/></label><label>Your email<input name="email" type="email" maxlength="140" required autocomplete="email" placeholder="you@example.com" disabled={!ready}/></label><label>Subject<input name="subject" type="text" maxlength="140" required placeholder="What is this about?" disabled={!ready}/></label><label>Message<textarea name="message" rows="6" maxlength="5000" required placeholder="Write your message..." disabled={!ready}></textarea></label><button class="btn btn-dark" type="submit" disabled={!ready}>Open email app ↗</button><span id="contact-status" role="status"></span></form></section>
+<script>
+ const form=document.querySelector<HTMLFormElement>('#contact-form');form?.addEventListener('submit',ev=>{ev.preventDefault();if(!form.reportValidity())return;const data=new FormData(form);const to=form.dataset.recipient||'';if(!to)return;const subject=String(data.get('subject')||'');const body=`Name: ${data.get('name')}
+Reply-to: ${data.get('email')}
+
+${data.get('message')}`;window.location.href=`mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;const status=document.getElementById('contact-status');if(status)status.textContent='Your email application should open. The website has not sent anything automatically.';});
+</script>
+</BaseLayout>

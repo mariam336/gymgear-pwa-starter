@@ -1,0 +1,31 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from './Icon.astro';
+import {dateText,labels,paths,categoryMap} from '../lib/content';
+import products from '../data/products.json';
+import settings from '../data/settings.json';
+interface Props{ entry:any; kind:string }
+const {entry,kind}=Astro.props;
+const {Content,headings}=await render(entry);
+const articleUrl=new URL(`${paths[kind]}${entry.id}/`,Astro.site||Astro.url);
+const cat=categoryMap[entry.data.category];
+const selected=products.filter(p=>(entry.data.productIds||[]).includes(p.id));
+const title=entry.data.seoTitle||entry.data.title+' | '+settings.siteName;
+const summary=entry.data.seoDescription||entry.data.description;
+const schema={ '@context':'https://schema.org','@type':'BlogPosting',headline:entry.data.title,description:summary,datePublished:entry.data.date.toISOString(),...(entry.data.updated?{dateModified:entry.data.updated.toISOString()}:{}),author:{'@type':'Person',name:entry.data.author},mainEntityOfPage:articleUrl.toString(),publisher:{'@type':'Organization',name:settings.siteName} };
+---
+<BaseLayout title={title} description={summary} image={entry.data.image} article={true} schema={schema} noindex={entry.data.status==='demo'}>
+<div class="shell crumbs"><a href="/">Home</a><span>/</span><a href={paths[kind]}>{labels[kind]}s</a><span>/</span><span>{entry.data.title}</span></div>
+<section class="post-hero"><div class="shell post-hero-grid"><div><span class="post-category">{cat?.name||entry.data.category} · {labels[kind]}</span><h1>{entry.data.title}</h1><p class="post-dek">{entry.data.description}</p><div class="byline"><span class="author-dot">FG</span><span>By {entry.data.author}<small>{dateText(entry.data.date)}{entry.data.updated?' · Updated '+dateText(entry.data.updated):''}</small></span></div></div><div class="post-visual"><img src={entry.data.image||'/images/gear-home.svg'} alt={`Editorial illustration for ${entry.data.title}`} width="640" height="440"/></div></div></section>
+<div class="shell article-grid"><div class="post-main">
+{entry.data.status==='demo'&&<div class="disclosure-banner"><Icon name="shield" size={22}/><div><strong>Demonstration article — not a product endorsement</strong><p>This page shows the planned article design. Product claims, links and testing results must be verified before publishing. It is excluded from search indexing.</p></div></div>}
+<div class="affiliate-note"><strong>Affiliate disclosure:</strong> This website may earn a commission from qualifying purchases through clearly identified affiliate links. <a href="/affiliate-disclosure/">Read our policy</a>.</div>
+{entry.data.verdict&&<section class="verdict-block" id="quick-verdict"><span class="mini-category">AT A GLANCE</span><h2>Quick verdict</h2><p>{entry.data.verdict}</p><div class="verdict-tags">{entry.data.bestFor&&<span><b>Best for:</b> {entry.data.bestFor}</span>}{entry.data.notFor&&<span><b>Consider alternatives if:</b> {entry.data.notFor}</span>}</div></section>}
+{selected.length>0&&<section class="comparison-in-article" id="example-products"><h2>Equipment examples</h2><p class="footnote">These are unverified demonstration records. They do not represent tested models or current retailer offers.</p><div class="product-mini-grid">{selected.map(p=><div class="product-mini"><img src={p.image} width="640" height="440" loading="lazy" alt={`Illustration of ${p.productType}`}/><h3>{p.name}</h3><p>{p.keyConsideration}</p><dl>{p.specifications.map(s=><div><dt>{s.name}</dt><dd>{s.value}</dd></div>)}</dl>{p.retailers?.length? p.retailers.map(r=><a class="btn btn-lime" href={r.url} rel="sponsored noopener noreferrer" target="_blank">Check at {r.name} ↗</a>):<span class="pending-offer">No approved retailer link yet</span>}</div>)}</div></section>}
+<div class="rich-text"><Content /></div>
+{(entry.data.pros?.length>0||entry.data.cons?.length>0)&&<section class="pros-cons"><div class="pros"><h3>Potential advantages</h3><ul>{entry.data.pros.map(x=><li>{x}</li>)}</ul></div><div class="cons"><h3>Important limitations</h3><ul>{entry.data.cons.map(x=><li>{x}</li>)}</ul></div></section>}
+<div class="end-box"><span class="eyebrow eyebrow-dark">KEEP EXPLORING</span><h2>Compare the details before you decide.</h2><p>For different equipment needs, use our product comparison tool and research-based buying guides.</p><a href="/compare/" class="btn btn-dark">Compare equipment <Icon name="arrowUp" size={16}/></a></div>
+<div class="author-box"><div class="author-avatar">FG</div><div><strong>{entry.data.author}</strong><p>Author profile details must be completed with real experience and qualifications. <a href="/authors/">Read author information</a>.</p></div></div>
+</div><aside class="article-sidebar"><div class="toc-box"><strong>ON THIS PAGE</strong>{headings.length>0?<nav aria-label="Article table of contents">{headings.filter(h=>h.depth===2).slice(0,12).map(h=><a href={`#${h.slug}`}>{h.text}</a>)}</nav>:<p>Explore the article below.</p>}</div><div class="sidebar-feature"><Icon name="shield" size={24}/><h3>How we evaluate gear</h3><p>We separate hands-on testing from specification-based research, with no invented scores.</p><a href="/how-we-test/">Our methodology ↗</a></div></aside></div>
+</BaseLayout>

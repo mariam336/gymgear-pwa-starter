@@ -1,0 +1,7 @@
+---
+import Icon from './Icon.astro';
+const {category,index=0}=Astro.props;
+---
+<a class={`category-tile tone-${category.tone}`} href={`/category/${category.slug}/`}>
+<div class="category-icon"><Icon name={category.icon} size={28}/></div><span class="tile-index">{String(index+1).padStart(2,'0')}</span><div><h3>{category.name}</h3><p>{category.short}</p></div><span class="tile-arrow">↗</span>
+</a>

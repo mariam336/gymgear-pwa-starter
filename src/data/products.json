@@ -1,0 +1,138 @@
+[
+  {
+    "id": "adjustable-dumbbells-demo",
+    "name": "Adjustable Dumbbells — Example Product",
+    "brand": "Demo record (no verified brand)",
+    "category": "home-gym-equipment",
+    "productType": "Adjustable dumbbells",
+    "bestFor": "Space-limited strength training",
+    "keyConsideration": "Weight range and locking mechanism",
+    "storage": "Compact relative to multiple fixed pairs",
+    "image": "/images/gear-strength.svg",
+    "specifications": [
+      {
+        "name": "Weight increments",
+        "value": "Verify for chosen model"
+      },
+      {
+        "name": "Warranty",
+        "value": "Verify for chosen model"
+      },
+      {
+        "name": "Storage dimensions",
+        "value": "Verify for chosen model"
+      }
+    ],
+    "pros": [
+      "Potentially saves storage space"
+    ],
+    "cons": [
+      "Adjustment mechanisms vary significantly"
+    ],
+    "retailers": [],
+    "reviewUrl": "/reviews/adjustable-dumbbells-example-review/",
+    "published": false
+  },
+  {
+    "id": "resistance-bands-demo",
+    "name": "Resistance Band Set — Example Product",
+    "brand": "Demo record (no verified brand)",
+    "category": "workout-accessories",
+    "productType": "Resistance bands",
+    "bestFor": "Beginner and travel-friendly workouts",
+    "keyConsideration": "Resistance levels and material quality",
+    "storage": "Easy to pack",
+    "image": "/images/gear-accessories.svg",
+    "specifications": [
+      {
+        "name": "Resistance levels",
+        "value": "Verify for chosen model"
+      },
+      {
+        "name": "Material",
+        "value": "Verify for chosen model"
+      },
+      {
+        "name": "Anchors",
+        "value": "Verify for chosen model"
+      }
+    ],
+    "pros": [
+      "Lightweight and packable"
+    ],
+    "cons": [
+      "Wear and anchor safety need attention"
+    ],
+    "retailers": [],
+    "reviewUrl": "/reviews/resistance-bands-example-review/",
+    "published": false
+  },
+  {
+    "id": "foam-roller-demo",
+    "name": "Foam Roller — Example Product",
+    "brand": "Demo record (no verified brand)",
+    "category": "recovery-tools",
+    "productType": "Foam roller",
+    "bestFor": "People comparing self-massage tools",
+    "keyConsideration": "Density, texture and dimensions",
+    "storage": "Varies by length",
+    "image": "/images/gear-recovery.svg",
+    "specifications": [
+      {
+        "name": "Density",
+        "value": "Verify for chosen model"
+      },
+      {
+        "name": "Dimensions",
+        "value": "Verify for chosen model"
+      },
+      {
+        "name": "Materials",
+        "value": "Verify for chosen model"
+      }
+    ],
+    "pros": [
+      "Simple equipment with few moving parts"
+    ],
+    "cons": [
+      "Firmness preferences vary"
+    ],
+    "retailers": [],
+    "reviewUrl": "/reviews/foam-roller-example-review/",
+    "published": false
+  },
+  {
+    "id": "yoga-mat-demo",
+    "name": "Yoga Mat — Example Product",
+    "brand": "Demo record (no verified brand)",
+    "category": "yoga-mobility",
+    "productType": "Yoga mat",
+    "bestFor": "Home exercise on indoor floors",
+    "keyConsideration": "Thickness, grip and cleaning",
+    "storage": "Rolled or folded",
+    "image": "/images/gear-yoga.svg",
+    "specifications": [
+      {
+        "name": "Thickness",
+        "value": "Verify for chosen model"
+      },
+      {
+        "name": "Grip",
+        "value": "Verify for chosen model"
+      },
+      {
+        "name": "Materials",
+        "value": "Verify for chosen model"
+      }
+    ],
+    "pros": [
+      "Portable and simple to store"
+    ],
+    "cons": [
+      "Grip and cushioning are personal"
+    ],
+    "retailers": [],
+    "reviewUrl": "",
+    "published": false
+  }
+]

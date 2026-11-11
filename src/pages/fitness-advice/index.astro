@@ -1,0 +1,7 @@
+---
+import { getCollection } from 'astro:content';
+import ArchivePage from '../../components/ArchivePage.astro';
+import {href} from '../../lib/content';
+const items=(await getCollection('fitnessAdvice',({data})=>data.status!=='draft')).map(entry=>({kind:'fitnessAdvice',entry,href:href('fitnessAdvice',entry.id)})).sort((a,b)=>+b.entry.data.date - +a.entry.data.date);
+---
+<ArchivePage title="Fitness Gear Advice" description="Practical answers about storing, selecting and maintaining exercise gear." eyebrow="FITNESS EDUCATION" items={items} />

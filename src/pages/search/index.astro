@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import {allArticles} from '../../lib/content';
+const items=await allArticles();
+---
+<BaseLayout title="Search Fitness Gear Guides | FitGear Review Hub" description="Search equipment advice, comparisons, and reviews." noindex={true}>
+<PageHero eyebrow="FIND THE RIGHT INFORMATION" title="What are you looking for?" intro="Search our buying guides, product reviews, and equipment comparisons." />
+<section class="shell archive-wrap"><label class="sr-only" for="search-all">Search topics</label><div class="input-shell big-search"><span>⌕</span><input type="search" id="search-all" placeholder="Try adjustable dumbbells, resistance bands, yoga mats..." autocomplete="off" autofocus/></div><p id="search-count" class="search-count" role="status"></p><div id="search-grid" class="article-grid-cards">{items.map(item=><ArticleCard item={item}/>)}</div><p id="search-empty" class="empty-state" hidden>No results found. Try searching for a broader equipment category.</p><div class="pagination-controls"><button id="search-more" type="button" class="btn btn-outline" hidden>Show more results ↓</button></div></section>
+<script>
+ const field=document.querySelector<HTMLInputElement>('#search-all');const cards=[...document.querySelectorAll<HTMLElement>('#search-grid .article-card')];const empty=document.getElementById('search-empty');const counter=document.getElementById('search-count');const more=document.getElementById('search-more');let limit=9;
+ const initial=new URLSearchParams(location.search).get('q')||'';if(field)field.value=initial;
+ function update(){const q=(field?.value||'').trim().toLowerCase();const matching=cards.filter(c=>(c.dataset.search||'').includes(q));for(const c of cards)c.hidden=!matching.slice(0,limit).includes(c);if(counter)counter.textContent=`${matching.length} article${matching.length===1?'':'s'} found`;if(empty)empty.hidden=matching.length>0;if(more)more.hidden=matching.length<=limit;}
+ field?.addEventListener('input',()=>{limit=9;update();history.replaceState({},'',location.pathname+(field.value?'?q='+encodeURIComponent(field.value):''));});more?.addEventListener('click',()=>{limit+=9;update()});update();
+</script>
+</BaseLayout>

@@ -1,0 +1,5 @@
+---
+import InfoPage from '../../components/InfoPage.astro';
+import settings from '../../data/settings.json';
+---
+<InfoPage title="Meet the authors." eyebrow="OUR CONTRIBUTORS" intro="Transparent author information helps readers understand the experience behind each article."><h2>{settings.authorName}</h2><p>This is currently a placeholder author profile. Add your real biography, applicable experience, published articles and contact links in <code>src/data/settings.json</code> (or the Pages CMS settings editor).</p><p>Do not publish invented credentials or testing history.</p></InfoPage>

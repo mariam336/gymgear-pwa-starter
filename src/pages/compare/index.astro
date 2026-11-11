@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Icon from '../../components/Icon.astro';
+import {getCollection} from 'astro:content';
+import {href} from '../../lib/content';
+import products from '../../data/products.json';
+const entries=(await getCollection('comparisons',({data})=>data.status!=='draft')).map(entry=>({kind:'comparisons',entry,href:href('comparisons',entry.id)}));
+const compareData=JSON.stringify(products).replaceAll('<','\u003c');
+---
+<BaseLayout title="Compare Fitness Equipment | FitGear Review Hub" description="Select two or three equipment examples to compare their use cases, storage requirements and evaluation criteria.">
+<PageHero eyebrow="EQUIPMENT COMPARISON TOOL" title="Compare before you commit." intro="Choose two or three equipment examples to compare what matters. Demonstration records are not verified retail products." />
+<section class="shell compare-tool-section"><div class="notice-soft"><Icon name="shield" size={21}/><p><strong>Demo comparison:</strong> These are generic example equipment records, not tested commercial models. Add verified products through the CMS before using this for purchase recommendations.</p></div><div class="compare-selectors"><label>Product one<select id="pick-one"><option value="">Choose equipment...</option>{products.map(p=><option value={p.id}>{p.name}</option>)}</select></label><label>Product two<select id="pick-two"><option value="">Choose equipment...</option>{products.map(p=><option value={p.id}>{p.name}</option>)}</select></label><label>Product three <small>(optional)</small><select id="pick-three"><option value="">No third product</option>{products.map(p=><option value={p.id}>{p.name}</option>)}</select></label></div><div class="compare-action"><button class="btn btn-dark" type="button" id="compare-button">Compare selections <Icon name="compare" size={18}/></button><span id="compare-warning" role="status"></span></div><div id="compare-results" class="compare-results" hidden><h2>Side-by-side overview</h2><p>Descriptions show the considerations relevant to each equipment type, not verified model-specific specifications.</p><div class="comparison-table-scroll"><table id="compare-table"><caption class="sr-only">Selected equipment comparison</caption><thead></thead><tbody></tbody></table></div></div></section>
+<section class="section-block shell"><div class="section-head"><div><span class="eyebrow eyebrow-dark"><span class="eyebrow-line"></span>HEAD-TO-HEAD GUIDES</span><h2>Choose what fits your routine.</h2><p>Written comparisons explain which equipment types fit different scenarios.</p></div></div><div class="article-grid-cards">{entries.map(item=><ArticleCard item={item}/>)}</div></section>
+<script id="compare-json" type="application/json" set:html={compareData}/>
+<script>
+ type Product={id:string;name:string;productType:string;bestFor:string;keyConsideration:string;storage:string;specifications:{name:string;value:string}[];reviewUrl:string;retailers:{name:string;url:string}[]};
+ const rows:Product[]=JSON.parse(document.getElementById('compare-json')?.textContent||'[]');
+ const result=document.getElementById('compare-results');const notice=document.getElementById('compare-warning');
+ document.getElementById('compare-button')?.addEventListener('click',()=>{
+ const choices=['pick-one','pick-two','pick-three'].map(id=>(document.getElementById(id) as HTMLSelectElement)?.value).filter(Boolean);
+ if(choices.length<2||new Set(choices).size!==choices.length){if(notice)notice.textContent='Please choose at least two different products.';if(result)result.hidden=true;return;}
+ if(notice)notice.textContent='';const selected=choices.map(id=>rows.find(p=>p.id===id)).filter(Boolean) as Product[];
+ const thead=document.querySelector('#compare-table thead');const tbody=document.querySelector('#compare-table tbody');if(!thead||!tbody)return;
+ thead.textContent='';tbody.textContent='';const head=document.createElement('tr');['Comparison point',...selected.map(x=>x.name)].forEach(t=>{const th=document.createElement('th');th.textContent=t;head.append(th)});thead.append(head);
+ for(const [label,key] of [['Product type','productType'],['Best suited for','bestFor'],['Key buying consideration','keyConsideration'],['Storage note','storage']] as const){const tr=document.createElement('tr');for(const t of [label,...selected.map(p=>p[key])]){const td=document.createElement('td');td.textContent=t;tr.append(td)}tbody.append(tr)}
+ const row=document.createElement('tr');const title=document.createElement('td');title.textContent='Specs / retailer status';row.append(title);for(const p of selected){const td=document.createElement('td');td.textContent='Exact specs and affiliate offers not yet verified';row.append(td)}tbody.append(row);
+ if(result)result.hidden=false;result?.scrollIntoView({behavior:'smooth',block:'start'});
+ });
+</script>
+</BaseLayout>

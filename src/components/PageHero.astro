@@ -1,0 +1,5 @@
+---
+interface Props{ eyebrow:string; title:string; intro:string; count?:string }
+const {eyebrow,title,intro,count}=Astro.props;
+---
+<section class="interior-hero"><div class="shell"><div class="eyebrow eyebrow-dark"><span class="eyebrow-line"></span>{eyebrow}</div><div class="interior-hero-row"><div><h1>{title}</h1><p>{intro}</p></div>{count&&<span class="big-count">{count}</span>}</div></div></section>
